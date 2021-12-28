@@ -30,12 +30,7 @@ class AddressBook:
     """
     created address book class for making require method
     """
-
-    def __init__(self):
-        """
-        initializing the constructor
-        """
-        self.address_list = []
+    address_list = []
 
     def add_person(self, person_address):
         """
@@ -130,6 +125,7 @@ if __name__ == "__main__":
                 1.Add person
                 2.Show details
                 3.Edit details
+                4.Delete contact
                 """)
             choice = int(input("Enter your choice:- "))
             if choice == 1:
@@ -148,6 +144,8 @@ if __name__ == "__main__":
                 address_book.show_details()
             elif choice == 3:
                 address_book.edit_details()
+            elif choice == 4:
+                address_book.delete_contact()
 
     except Exception:
         logging.exception("Enter proper value!!!")
