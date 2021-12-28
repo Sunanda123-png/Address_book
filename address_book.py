@@ -46,6 +46,10 @@ class AddressBook:
         self.address_list.append(person_address)
 
     def show_details(self):
+        """
+        for display the inputted value created show details method
+        :return:
+        """
         for address in self.address_list:
             print("The firstname is :-", address.first_name)
             print("The lastname is :- ", address.last_name)
@@ -54,6 +58,52 @@ class AddressBook:
             print("Email id is :- ", address.email)
             print("The state of this person is :- ", address.state)
             print("Pin number is :- ", address.pin_no)
+
+    def edit_details(self):
+        """
+        for editing the existing details created edit_details method
+        :return:
+        """
+        try:
+            contact_name = input("Enter the Firstname of person which you want to edit information:- ")
+            for contact in self.address_list:
+                if contact.first_name == contact_name:
+                    print("""Your choice:-
+                                    1.First name
+                                    2.Last name
+                                    3.Age
+                                    4.Mobile number
+                                    5.Email
+                                    6.State
+                                    7.Pin number
+                                    """)
+                    choices = int(input("Enter your choice:- "))
+                    if choices == 1:
+                        firstname = input("Enter the new first name:- ")
+                        contact.first_name = firstname
+                    elif choices == 2:
+                        lastname = input("Enter new last name:- ")
+                        contact.last_name = lastname
+                    elif choices == 3:
+                        ages = int(input("Enter new age:- "))
+                        contact.age = ages
+                    elif choices == 4:
+                        mobile_number = int(input("Enter new mobile number:- "))
+                        contact.mobile_no = mobile_number
+                    elif choices == 5:
+                        email_id = input("Enter new email id:-")
+                        contact.email = email_id
+                    elif choices == 6:
+                        state_person = input("Enter new state:- ")
+                        contact.state = state_person
+                    elif choices == 7:
+                        pin_number = int(input("Enter new pin number:- "))
+                        contact.pin_no = pin_number
+                    else:
+                        print("Wrong choice!!!")
+                        break
+        except Exception:
+            logging.exception("Type proper value!!!")
 
 
 if __name__ == "__main__":
@@ -64,6 +114,7 @@ if __name__ == "__main__":
                 Choose as per your wish:-
                 1.Add person
                 2.Show details
+                3.Edit details
                 """)
             choice = int(input("Enter your choice:- "))
             if choice == 1:
@@ -80,6 +131,8 @@ if __name__ == "__main__":
                 address_book.add_person(contact)
             elif choice == 2:
                 address_book.show_details()
+            elif choice == 3:
+                address_book.edit_details()
 
     except Exception:
         logging.exception("Enter proper value!!!")
