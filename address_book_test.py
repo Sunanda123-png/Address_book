@@ -32,7 +32,7 @@ def test_edit_details():
 
 def test_delete_contact():
     """
-    testing delete contact method
+    test delete contact method
     :return:
     """
     address_book = AddressBook()
