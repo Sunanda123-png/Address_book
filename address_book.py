@@ -105,6 +105,21 @@ class AddressBook:
         except Exception:
             logging.exception("Type proper value!!!")
 
+    def delete_contact(self):
+        """
+        Delete the contact details as per user choice
+        :return:
+        """
+        try:
+            delete_contact = input("Enter the first name you want to delete:- ")
+            for contact in self.address_list:
+                if contact.first_name == delete_contact:
+                    self.address_list.remove(contact)
+                else:
+                    print("Name not found")
+        except Exception:
+            logging.exception("Type string value!!!")
+
 
 if __name__ == "__main__":
     address_book = AddressBook()
