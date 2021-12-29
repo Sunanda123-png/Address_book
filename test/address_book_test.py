@@ -4,7 +4,6 @@ from address_book import AddressBook, Contact
 def test_add_person():
     """
     testing the add_person method
-    :return:
     """
     address_book = AddressBook()
     contact_dict = {"first_name": "sunanda", "last_name": "shil", "age": 25, "mobile_no": 7578061886,
@@ -17,7 +16,6 @@ def test_add_person():
 def test_edit_details():
     """
     testing the edit details method
-    :return:
     """
     address_book = AddressBook()
     contact_dict = {"first_name": "sunanda", "last_name": "shil", "age": 25, "mobile_no": 7578061886,
@@ -33,7 +31,6 @@ def test_edit_details():
 def test_delete_contact():
     """
     test delete contact method
-    :return:
     """
     address_book = AddressBook()
     contact_dict = {"first_name": "sunanda", "last_name": "shil", "age": 25, "mobile_no": 7578061886,
