@@ -30,20 +30,19 @@ class AddressBook:
     """
     created address book class for making require method
     """
-    address_list = []
+    def __init__(self):
+        self.address_list = []
 
     def add_person(self, person_address):
         """
         Creating this method for adding person in list
-        :param person_address:
-        :return:
+        :param person_address: is a object
         """
         self.address_list.append(person_address)
 
     def show_details(self):
         """
         for display the inputted value created show details method
-        :return:
         """
         for address in self.address_list:
             print("The firstname is :-", address.first_name)
@@ -57,10 +56,9 @@ class AddressBook:
     def edit_details(self):
         """
         for editing the existing details created edit_details method
-        :return:
         """
         try:
-            contact_name = input("Enter the Firstname of person which you want to edit information:- ")
+
             for contact in self.address_list:
                 if contact.first_name == contact_name:
                     print("""Your choice:-
@@ -97,13 +95,14 @@ class AddressBook:
                     else:
                         print("Wrong choice!!!")
                         break
+                else:
+                    print("Name not found")
         except Exception:
             logging.exception("Type proper value!!!")
 
     def delete_contact(self):
         """
         Delete the contact details as per user choice
-        :return:
         """
         try:
             delete_contact = input("Enter the first name you want to delete:- ")
@@ -143,6 +142,7 @@ if __name__ == "__main__":
             elif choice == 2:
                 address_book.show_details()
             elif choice == 3:
+                contact_name = input("Enter the Firstname of person which you want to edit information:- ")
                 address_book.edit_details()
             elif choice == 4:
                 address_book.delete_contact()
