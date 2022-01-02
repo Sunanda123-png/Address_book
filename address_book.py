@@ -5,6 +5,7 @@ Date:- 27-12-21
 import csv
 import logging
 
+
 logging.basicConfig(filename="address_book.log", filemode="w")
 
 
@@ -85,6 +86,16 @@ class AddressBook:
         """
         self.contact_list.append(person_address)
 
+        with open("address_book.csv", "w") as f:
+            for contact in self.contact_list:
+                f.write(f"FIRST NAME -> {contact.first_name}\n"
+                        f"LAST NAME -> {contact.last_name}\n"
+                        f"AGES -> {contact.age}\n"
+                        f"STATE -> {contact.state}\n"
+                        f"PIN CODE -> {contact.pin_no}\n"
+                        f"PHONE NUMBER -> {contact.mobile_no}\n"
+                        f"EMAIL -> {contact.email}\n\n")
+
     def show_details(self):
         """
         for display the inputted value created show details method
@@ -116,7 +127,7 @@ class AddressBook:
             else:
                 print("Name not found")
 
-    def delete_contact(self,delete_contacts):
+    def delete_contact(self, delete_contacts):
         """
         Delete the contact details as per user choice
         """
@@ -128,11 +139,6 @@ class AddressBook:
                     print("Name not found")
         except Exception:
             logging.exception("Type string value!!!")
-
-    def csv_file(self):
-        filename= "Person details"
-        with open(filename,"w") as csvfile:
-            csv.writer(csvfile)
 
 
 def get_address_book(multi_address_books, address_books_name):
