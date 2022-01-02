@@ -2,6 +2,7 @@
 Author:- Sunanda Shil
 Date:- 27-12-21
 """
+import csv
 import logging
 
 logging.basicConfig(filename="address_book.log", filemode="w")
@@ -28,49 +29,42 @@ class Contact:
     def set_first_name(self, firstname):
         """
         setter method for firstname
-        :param firstname:
         """
         self.first_name = firstname
 
     def set_last_name(self, lastname):
         """
         setter method for lastname
-        :param lastname:
         """
         self.last_name = lastname
 
     def set_ages(self, ages):
         """
         setter method for age
-        :param ages:
         """
         self.age = ages
 
     def set_mobile_number(self, mobile_number):
         """
         setter method for mobile number
-        :param mobile_number:
         """
         self.mobile_no = mobile_number
 
     def set_email_id(self, email_id):
         """
         setter method for email
-        :param email_id:
         """
         self.email = email_id
 
     def set_state(self, state_person):
         """
         setter method for state
-        :param state_person:
         """
         self.state = state_person
 
     def set_pin(self, pin_number):
         """
         setter method for pin number
-        :param pin_number:
         """
         self.pin_no = pin_number
 
@@ -113,26 +107,32 @@ class AddressBook:
         :return: contact
         """
         for contacts in self.contact_list:
-            if contact.first_name == contact_names:
+            if contacts.first_name == contact_names:
                 contact_dictionary = {1: contacts.set_first_name, 2: contacts.set_last_name, 3: contacts.set_ages,
                                       4: contacts.set_mobile_number, 5: contacts.set_email_id,
                                       6: contacts.set_state, 7: contacts.set_pin}
                 contact_dictionary.get(choices)(values)
-                return contact
+                return contacts
+            else:
+                print("Name not found")
 
-    def delete_contact(self):
+    def delete_contact(self,delete_contacts):
         """
         Delete the contact details as per user choice
         """
         try:
-            delete_contact = input("Enter the first name you want to delete:- ")
             for contacts in self.contact_list:
-                if contacts.first_name == delete_contact:
+                if contacts.first_name == delete_contacts:
                     self.contact_list.remove(contacts)
                 else:
                     print("Name not found")
         except Exception:
             logging.exception("Type string value!!!")
+
+    def csv_file(self):
+        filename= "Person details"
+        with open(filename,"w") as csvfile:
+            csv.writer(csvfile)
 
 
 def get_address_book(multi_address_books, address_books_name):
@@ -160,6 +160,7 @@ if __name__ == "__main__":
                 2.Show details
                 3.Edit details
                 4.Delete contact
+                5.CSV export
                 """)
             choice = int(input("Enter your choice:- "))
             if choice == 1:
@@ -206,7 +207,15 @@ if __name__ == "__main__":
             elif choice == 4:
                 address_book_name = input("Enter the address book name:- ")
                 list_of_address_book, address_book = get_address_book(multi_address_book, address_book_name)
-                address_book.delete_contact()
+                try:
+                    delete_contact = input("Enter the first name you want to delete:- ")
+                    address_book.delete_contact(delete_contact)
+                except Exception:
+                    logging.exception("Type proper value!!!")
+            elif choice == 5:
+                address_book_name = input("Enter the address book name:- ")
+                list_of_address_book, address_book = get_address_book(multi_address_book, address_book_name)
+                address_book.csv_file()
             else:
                 print("Wrong choice!!!")
                 break
