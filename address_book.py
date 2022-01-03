@@ -165,8 +165,7 @@ if __name__ == "__main__":
                 1.Add person
                 2.Show details
                 3.Edit details
-                4.Delete contact
-                5.CSV export
+                4.Delete contact                
                 """)
             choice = int(input("Enter your choice:- "))
             if choice == 1:
@@ -218,10 +217,6 @@ if __name__ == "__main__":
                     address_book.delete_contact(delete_contact)
                 except Exception:
                     logging.exception("Type proper value!!!")
-            elif choice == 5:
-                address_book_name = input("Enter the address book name:- ")
-                list_of_address_book, address_book = get_address_book(multi_address_book, address_book_name)
-                address_book.csv_file()
             else:
                 print("Wrong choice!!!")
                 break
