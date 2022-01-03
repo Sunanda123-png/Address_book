@@ -165,7 +165,7 @@ if __name__ == "__main__":
                 1.Add person
                 2.Show details
                 3.Edit details
-                4.Delete contact                
+                4.Delete contact..                
                 """)
             choice = int(input("Enter your choice:- "))
             if choice == 1:
