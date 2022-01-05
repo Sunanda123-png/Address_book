@@ -2,6 +2,7 @@
 Author:- Sunanda Shil
 Date:- 27-12-21
 """
+import json
 import logging
 
 
@@ -84,15 +85,23 @@ class AddressBook:
         :param person_address: is a object
         """
         self.contact_list.append(person_address)
-        with open("address_book.csv", "w") as f:
-            for contact in self.contact_list:
-                f.write(f"FIRST NAME -> {contact.first_name}\n"
-                        f"LAST NAME -> {contact.last_name}\n"
-                        f"AGES -> {contact.age}\n"
-                        f"STATE -> {contact.state}\n"
-                        f"PIN CODE -> {contact.pin_no}\n"
-                        f"PHONE NUMBER -> {contact.mobile_no}\n"
-                        f"EMAIL -> {contact.email}\n\n")
+
+        try:
+
+            dictionary = {
+                "firstname": person_address.first_name,
+                "lastname":person_address.last_name,
+                "Age":person_address.age,
+                "phone_number":person_address.mobile_no,
+                "email": person_address.email,
+                "state": person_address.state,
+                "pin_no": person_address.pin_no
+            }
+            json_object = json.dumps(dictionary, indent=7)
+            with open("Address_book.json", "w") as file:
+                file.write(json_object)
+        except Exception as e:
+            logging.error(e)
 
     def show_details(self):
         """
@@ -135,8 +144,8 @@ class AddressBook:
                     self.contact_list.remove(contacts)
                 else:
                     print("Name not found")
-        except Exception:
-            logging.exception("Type string value!!!")
+        except Exception as e:
+            logging.error(e)
 
 
 def get_address_book(multi_address_books, address_books_name):
@@ -219,5 +228,5 @@ if __name__ == "__main__":
                 print("Wrong choice!!!")
                 break
 
-    except Exception:
-        logging.exception("Enter proper value!!!")
+    except Exception as e:
+        logging.error(e)
