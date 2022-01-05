@@ -1,19 +1,17 @@
-"""
-Author:- Sunanda Shil
-Date:- 27-12-21
-"""
-import csv
+from abc import ABCMeta
 import logging
-
+import json
 
 logging.basicConfig(filename="address_book.log", filemode="w")
 
 
-class Contact:
-    """
-    created class for person address
-    """
+class IPerson(metaclass=ABCMeta):
+    @staticmethod
+    def person_method():
+        """Interface Method"""
 
+
+class Contact(IPerson):
     def __init__(self, contact_dict):
         """
         created constructor for initialize the variable
@@ -70,11 +68,7 @@ class Contact:
         self.pin_no = pin_number
 
 
-class AddressBook:
-    """
-    created address book class for making require method
-    """
-
+class AddressBook(IPerson):
     def __init__(self, name):
         self.name = name
         self.contact_list = []
@@ -86,15 +80,21 @@ class AddressBook:
         """
         self.contact_list.append(person_address)
 
-        with open("address_book.csv", "w") as f:
-            for contact in self.contact_list:
-                f.write(f"FIRST NAME -> {contact.first_name}\n"
-                        f"LAST NAME -> {contact.last_name}\n"
-                        f"AGES -> {contact.age}\n"
-                        f"STATE -> {contact.state}\n"
-                        f"PIN CODE -> {contact.pin_no}\n"
-                        f"PHONE NUMBER -> {contact.mobile_no}\n"
-                        f"EMAIL -> {contact.email}\n\n")
+        try:
+            dictionary = {
+                "first_name": person_address.first_name,
+                "last_name": person_address.last_name,
+                "Age": person_address.age,
+                "mobile_no": person_address.mobile_no,
+                "Email": person_address.email,
+                "State": person_address.state,
+                "Pin": person_address.pin_no
+            }
+            json_object = json.dumps(dictionary, indent=7)
+            with open("Address_book.json", "w") as file:
+                file.write(json_object)
+        except Exception as e:
+            logging.error(e)
 
     def show_details(self):
         """
@@ -141,22 +141,25 @@ class AddressBook:
             logging.exception("Type string value!!!")
 
 
-def get_address_book(multi_address_books, address_books_name):
-    """
+class PersonFactory:
+    @staticmethod
+    def get_addressbook(multi_address_books, address_books_name):
+        """
 
-    :param multi_address_books: for multiple address book
-    :param address_books_name: name of the address book
-    :return:
-    """
-    for address_books in multi_address_books:
-        if address_book.name == address_books_name:
-            return multi_address_books, address_books
-    address_books = AddressBook(address_books_name)
-    multi_address_books.append(address_books)
-    return multi_address_books, address_books
+        :param multi_address_books: for multiple address book
+        :param address_books_name: name of the address book
+        :return:
+        """
+        for address_books in multi_address_books:
+            if address_book.name == address_books_name:
+                return multi_address_books, address_books
+        address_books = AddressBook(address_books_name)
+        multi_address_books.append(address_books)
+        return multi_address_books, address_books
 
 
 if __name__ == "__main__":
+    person = PersonFactory()
     multi_address_book = []
     try:
         while True:
@@ -170,7 +173,7 @@ if __name__ == "__main__":
             choice = int(input("Enter your choice:- "))
             if choice == 1:
                 address_book_name = input("Enter the address book name:- ")
-                list_of_address_book, address_book = get_address_book(multi_address_book, address_book_name)
+                list_of_address_book, address_book = person.get_addressbook(multi_address_book, address_book_name)
                 first_name = input("Enter first name:- ")
                 last_name = input("Enter last name:- ")
                 age = int(input("Enter ages:- "))
@@ -183,14 +186,15 @@ if __name__ == "__main__":
                                 "mobile_no": mobile_no, "email": email, "state": state, "pin_no": pin_no}
                 contact = Contact(contact_dict)
                 address_book.add_person(contact)
+
             elif choice == 2:
                 address_book_name = input("Enter the address book name:- ")
-                list_of_address_book, address_book = get_address_book(multi_address_book, address_book_name)
+                list_of_address_book, address_book = person.get_addressbook(multi_address_book, address_book_name)
                 address_book.show_details()
             elif choice == 3:
 
                 address_book_name = input("Enter the address book name:- ")
-                list_of_address_book, address_book = get_address_book(multi_address_book, address_book_name)
+                list_of_address_book, address_book = person.get_addressbook(multi_address_book, address_book_name)
                 try:
                     contact_name = input("Enter the Firstname which you want to edit info:- ")
 
@@ -211,7 +215,7 @@ if __name__ == "__main__":
                     logging.exception("Choose proper option!!!")
             elif choice == 4:
                 address_book_name = input("Enter the address book name:- ")
-                list_of_address_book, address_book = get_address_book(multi_address_book, address_book_name)
+                list_of_address_book, address_book = person.get_addressbook(multi_address_book, address_book_name)
                 try:
                     delete_contact = input("Enter the first name you want to delete:- ")
                     address_book.delete_contact(delete_contact)
