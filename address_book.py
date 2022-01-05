@@ -94,16 +94,6 @@ class AddressBook:
                         f"PHONE NUMBER -> {contact.mobile_no}\n"
                         f"EMAIL -> {contact.email}\n\n")
 
-        with open("address_book.csv", "w") as f:
-            for contact in self.contact_list:
-                f.write(f"FIRST NAME -> {contact.first_name}\n"
-                        f"LAST NAME -> {contact.last_name}\n"
-                        f"AGES -> {contact.age}\n"
-                        f"STATE -> {contact.state}\n"
-                        f"PIN CODE -> {contact.pin_no}\n"
-                        f"PHONE NUMBER -> {contact.mobile_no}\n"
-                        f"EMAIL -> {contact.email}\n\n")
-
     def show_details(self):
         """
         for display the inputted value created show details method
